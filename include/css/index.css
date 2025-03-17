@@ -1,0 +1,250 @@
+﻿@font-face {
+    font-family: 'Cafe24Dongdong';
+    font-weight: 700;
+    src: url(fonts/Cafe24Dongdong.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'CookieRegular';
+    font-weight: 700;
+    src: url(fonts/CookieRun_Regular.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'CookieBold';
+    font-weight: 700;
+    src: url(fonts/CookieRun_Bold.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'CookieBlack';
+    font-weight: 900;
+    src: url(fonts/CookieRun_Black.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'esamanruMedium';
+    font-weight: 700;
+    src: url(fonts/esamanru_OTF_Medium.otf) format('truetype');
+}
+
+@font-face {
+    font-family: 'esamanruBold';
+    font-weight: 700;
+    src: url(fonts/esamanru_OTF_Bold.otf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Katuri';
+    font-weight: 700;
+    src: url(fonts/Katuri.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'KCC';
+    font-weight: 700;
+    src: url(fonts/KCCMurukmuruk.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'KorailMedium';
+    font-weight: 600;
+    src: url(fonts/Korail_Round_Gothic_Medium.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'KorailBold';
+    font-weight: 700;
+    src: url(fonts/Korail_Round_Gothic_Bold.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'netmarbleM';
+    font-weight: 700;
+    src: url(fonts/netmarbleM.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'netmarbleB';
+    font-weight: 700;
+    src: url(fonts/netmarbleB.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'ONE_Mobile';
+    font-weight: 700;
+    src: url(fonts/ONE_Mobile_POP.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'SDSamlipOutline';
+    font-weight: 700;
+    src: url(fonts/SDSamliphopangcheTTFOutline.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'SDSamlipBasic';
+    font-weight: 700;
+    src: url(fonts/SDSamliphopangcheTTFBasic.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'SF_Lemon';
+    font-weight: 700;
+    src: url(fonts/SF_Lemon.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Sokcho';
+    font-weight: 700;
+    src: url(fonts/SokchoBadaDotum.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'Tinkerbell';
+    font-weight: 700;
+    src: url(fonts/Tinkerbell.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'TTTogether';
+    font-weight: 700;
+    src: url(fonts/TTTogether.ttf) format('truetype');
+}
+
+
+
+* {
+/*    font-size: 150px;*/
+    /*    font-weight: 900;*/
+    margin: 0;
+    padding: 0;
+    -webkit-text-size-adjust: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
+    /* smooth 처리 */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    pointer-events: none;
+}
+
+
+.main_cont {
+    width: 1280px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #888888;
+}
+
+.main_txt {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent !important;
+    width: 1280px;
+    height: 300px;
+    font-family: 'CookieBold';
+    /*    display: inline-block;*/
+    color: #00000000;
+    font-size: 150px;
+}
+
+.main_txt span {
+    /*    font-weight: 900;*/
+    /*    display: inline-block;*/
+    -webkit-text-stroke: 5px #FFFFFF;
+    /*    -webkit-text-fill-color: white;*/
+    /*    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, ));*/
+    /*
+    
+    text-shadow:
+        -5px -5px 0px #000,
+        5px -5px 0px #000,
+        -5px 5px 0px #000,
+        5px 5px 0px #000,
+        0px 0px 8px rgba(255, 255, 255, 0.9);
+    
+*/
+    /*
+    
+    filter: drop-shadow(-3px -3px 3px rgba(0, 0, 0, 1))
+            drop-shadow(3px -3px 3px rgba(0, 0, 0, 1))
+            drop-shadow(-3px 3px 3px rgba(0, 0, 0, 1))
+            drop-shadow(3px 3px 3px rgba(0, 0, 0, 1));
+    
+*/
+}
+
+.main_txt span:nth-child(odd) {
+    color: #3288BD;
+}
+
+.main_txt span:nth-child(even) {
+    color: #FC8D59
+}
+
+.btns_zone {
+    width: 1280px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.font_btn {
+    font-size: 32px;
+    width: 300px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #EE3300;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    margin: 5px;
+}
+
+.download_zone {
+    width: 1280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.finish_zone {
+    width: 1280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 50px;
+}
+
+.btn_download {
+    font-size: 32px;
+    width: 100%;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    margin: 5px;
+    background: #338833;
+}
