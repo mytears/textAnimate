@@ -15,8 +15,33 @@ function setInit() {
         onClickDownloadBtn(this);
     });
 
+    $(".btn_convert").on("touchstart mousedown", function (e) {
+        e.preventDefault();
+        onClickConvertBtn(this);
+    });
+
+    $(".txt_string").on("focus", function (e) {
+        e.preventDefault();
+        $(".txt_string").val("");
+    });
+
 
     $(".main_txt_temp").html($(".main_txt").text());
+    const $mainTxt = $(".main_txt");
+    const text = $mainTxt.text();
+    $mainTxt.empty(); // 기존 텍스트 제거
+    $.each(text.split(""), function (index, char) {
+        const $span = $("<span>").text(char).css({
+            opacity: 1
+        });
+        $mainTxt.append($span);
+        spans.push($span);
+    });
+}
+
+function onClickConvertBtn(_obj){
+    $(".main_txt_temp").html($(".txt_string").val());
+    $(".main_txt").html($(".main_txt_temp").html());
     const $mainTxt = $(".main_txt");
     const text = $mainTxt.text();
     $mainTxt.empty(); // 기존 텍스트 제거
