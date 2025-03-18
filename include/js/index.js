@@ -3,6 +3,13 @@ let framesAdded = 0;
 let totalFrames = 60; // 녹화할 프레임 수
 let gif = null;
 let spans = [];
+let m_font_animation = null;
+let m_f_color_0 = ["#F7AC43", "#73D674", "#000000"];
+let m_f_color_1 = ["#F7AC43", "#FFFFFF", "#000000"];
+const strokeWidth = 7;
+let m_mode = "1";
+let m_f_txt = "테스트용문자열";
+
 
 function setInit() {
 
@@ -25,7 +32,19 @@ function setInit() {
         $(".txt_string").val("");
     });
 
+    $("#id_color_0, #id_color_1, #id_color_3, #id_color_4").on("input", function (e) {
+        e.preventDefault();
+        onClickColorPicker(this);
+    });
 
+    $("#id_color_2, #id_color_5").on("input", function (e) {
+        e.preventDefault();
+        onClickStroke(this);
+    });
+    $(".main_txt").html(m_f_txt);
+
+    $(".main_png_txt").html($("#id_input").val());
+    $(".main_txt").html($("#id_input").val());
     $(".main_txt_temp").html($(".main_txt").text());
     const $mainTxt = $(".main_txt");
     const text = $mainTxt.text();
@@ -37,14 +56,88 @@ function setInit() {
         $mainTxt.append($span);
         spans.push($span);
     });
+
+    updateTextColorsCSS_0(m_f_color_0[0], m_f_color_0[1]);
+    $(".main_txt span").each(function () {
+        this.style.webkitTextStroke = `${strokeWidth}px ${m_f_color_0[2]}`;
+    });
+    updateTextColorsCSS_1(m_f_color_1[0], m_f_color_1[1]);
+    $(".main_png_txt").each(function () {
+        this.style.webkitTextStroke = `${strokeWidth}px ${m_f_color_1[2]}`;
+    });
+    $("#id_color_0").val(m_f_color_0[0]);
+    $("#id_color_1").val(m_f_color_0[1]);
+    $("#id_color_2").val(m_f_color_0[2]);
+    $("#id_color_3").val(m_f_color_1[0]);
+    $("#id_color_4").val(m_f_color_1[1]);
+    $("#id_color_5").val(m_f_color_1[2]);
 }
 
-function onClickConvertBtn(_obj){
+function onClickStroke(_obj) {
+    let t_color = "#000000";
+    if (m_mode == "0") {
+        t_color = $("#id_color_2").val();
+        $(".main_txt span").each(function () {
+            this.style.webkitTextStroke = `${strokeWidth}px ${strokeColor}`;
+        });
+    }else {
+        t_color = $("#id_color_5").val();
+        $(".main_png_txt").each(function () {
+            this.style.webkitTextStroke = `${strokeWidth}px ${t_color}`;
+        });
+    }
+}
+
+function onClickColorPicker(_obj) {
+    let t_color_0 = "";
+    let t_color_1 = "";
+    if (m_mode == "0") { //gif 모드
+        t_color_0 = $("#id_color_0").val();
+        t_color_1 = $("#id_color_1").val();
+        updateTextColorsCSS_0(t_color_0, t_color_1);
+    } else {
+        t_color_0 = $("#id_color_3").val();
+        t_color_1 = $("#id_color_4").val();
+        updateTextColorsCSS_1(t_color_0, t_color_1);
+    }
+}
+
+function updateTextColorsCSS_0(_color0, _color1) {
+    let styleTag = $("#dynamicStyles");
+
+    // 스타일 태그가 없으면 생성
+    if (styleTag.length === 0) {
+        $("head").append('<style id="dynamicStyles"></style>');
+        styleTag = $("#dynamicStyles");
+    }
+
+    // 새로운 스타일을 설정
+    styleTag.html(`
+        .main_txt span:nth-child(odd) {
+            color: ${_color0} !important;
+        }
+        .main_txt span:nth-child(even) {
+            color: ${_color1} !important;
+        }
+    `);
+}
+
+function updateTextColorsCSS_1(_color0, _color1) {
+    
+    $(".main_png_txt").css({
+        "background": "linear-gradient(0deg, " + _color1 + ", " + _color0 + ")",
+        "-webkit-background-clip": "text",
+        "-webkit-text-fill-color": "transparent"
+    });
+}
+
+function onClickConvertBtn(_obj) {
     $(".main_txt_temp").html($(".txt_string").val());
     $(".main_txt").html($(".main_txt_temp").html());
     const $mainTxt = $(".main_txt");
     const text = $mainTxt.text();
     $mainTxt.empty(); // 기존 텍스트 제거
+    spans = [];
     $.each(text.split(""), function (index, char) {
         const $span = $("<span>").text(char).css({
             opacity: 1
@@ -61,9 +154,63 @@ function onClickFontBtn(obj) {
     $(".main_txt").css("font-weight", "900");
     $(".txt_finish_title").html("");
     $(".txt_finish_desc").html("");
+    $(".main_png_txt").css("font-family", $(obj).html());
+    $(".main_png_txt").css("font-weight", "900");
+}
+function saveGradientTextCanvas() {
+    const text = $(".main_png_txt").text();  
+    const fontSize = parseInt(window.getComputedStyle($(".main_png_txt")[0]).fontSize);
+    const fontFamily = window.getComputedStyle($(".main_png_txt")[0]).fontFamily;
+    const textColor1 = $("#id_color_3").val(); 
+    const textColor2 = $("#id_color_4").val(); 
+    const strokeColor = $("#id_color_5").val();     
+    let width = $(".main_png_txt").outerWidth();
+    let height = $(".main_png_txt").outerHeight();
+
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext("2d");
+
+    // 그라데이션 설정
+    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    gradient.addColorStop(0, textColor1);
+    gradient.addColorStop(1, textColor2);
+
+    // 텍스트 스타일 설정
+    ctx.font = `${fontSize}px ${fontFamily}`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    //ctx.lineWidth = strokeWidth;
+    
+    for (let i = 0; i < strokeWidth*3; i++) {
+        ctx.lineWidth = i;
+        ctx.strokeStyle = strokeColor;
+        ctx.strokeText(text, canvas.width / 2, canvas.height / 2);
+    }
+    
+    ctx.strokeStyle = strokeColor;
+    ctx.fillStyle = gradient;
+
+    // 텍스트를 그리기
+    ctx.strokeText(text, canvas.width / 2, canvas.height / 2);
+    ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+
+    // 이미지 다운로드
+    const link = document.createElement("a");
+    link.href = canvas.toDataURL("image/png");
+    link.download = "text_image.png";
+    link.click();
 }
 
+
+
 function setStartAnimation() {
+    if (m_mode == "1") {
+        saveGradientTextCanvas();
+
+        return;
+    }
     $(".txt_finish_title").html("");
     $(".txt_finish_desc").html("");
     /*
@@ -109,7 +256,12 @@ function setStartAnimation() {
     */
     let startTime = performance.now();
     //console.log(startTime);
-    gsap.to(spans, {
+
+    if (m_font_animation) {
+        m_font_animation.kill();
+    }
+
+    m_font_animation = gsap.to(spans, {
         startAt: {
             scale: 2
         },
@@ -122,7 +274,8 @@ function setStartAnimation() {
             // 모든 글자가 나타난 후, 한 글자씩 개별적으로 커졌다 작아지는 애니메이션 실행
             spans.forEach((span, index) => {
                 gsap.to(span, {
-                    scale: 1.5,
+                    //                    scale: 1.5,
+                    y: -70,
                     duration: 0.6,
                     repeat: 1,
                     yoyo: true,
@@ -130,7 +283,7 @@ function setStartAnimation() {
                     delay: index * 0.2, // 개별적으로 순차 실행
                     onComplete: function () {
                         if (index === spans.length - 1) {
-                            console.log("애니메이션 종료 -> GIF 캡처 종료");
+                            console.log("애니메이션 종료");
                             /*
                             gif.on('progress', function (p) {
                                 console.log(`GIF 렌더링 진행률: ${(p * 100).toFixed(2)}%`);
@@ -167,11 +320,11 @@ function startRecording() {
         transparent: 0x00000000, // 배경 투명 유지
         workerScript: 'include/js/lib/gif.worker.js'
     });
-    
+
     const firstAnimation = 1 + (spans.length - 1) * 0.4;
     const secondAnimation = (spans.length - 1) * 0.2 + 1.2;
 
-    captureFrames3(firstAnimation+secondAnimation); // 프레임 캡처 시작
+    captureFrames3(firstAnimation + secondAnimation); // 프레임 캡처 시작
 }
 
 async function captureFrames() {
@@ -265,10 +418,21 @@ async function captureFrames2() {
 }
 
 async function captureFrames3(_sec) {
-    
+
     console.log(_sec);
+    console.log($(".main_txt").width(), $(".main_txt").height());
+
+    $(".main_txt").css("width", "auto");
+    let t_w = $(".main_txt").width() * 1.2;
+    if (t_w > 1280) {
+        t_w = 1280
+    };
+    $(".main_txt").css("width", t_w + "px");
+    //    return;
+
+
     $(".txt_finish_title").html("녹화 시작");
-    totalFrames = Math.ceil((_sec*1000) / (1000 / 30)); // 4.5초 동안 30FPS 캡처
+    totalFrames = Math.ceil((_sec * 1000) / (1000 / 30)); // 4.5초 동안 30FPS 캡처
     const frameDuration = 1000 / 30; // 30FPS -> 1프레임당 33.3ms
     let framePromises = [];
 

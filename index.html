@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="include/css/index.css">
     <link rel="stylesheet" href="include/css/animate.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="include/css/sweetalert2.min.css" rel="stylesheet" type="text/css" />
-    
+
     <script src="include/js/lib/jquery.min.js"></script>
     <script src="include/js/lib/jquery.ripples.min.js"></script>
     <script src="include/js/lib/gsap.min.js"></script>
@@ -25,47 +25,88 @@
 </head>
 
 <body>
-    <div class="input_zone">
-        <input class="txt_string" type="text" id="id_input" value="테스트용문자열">
-        <div class="btn_convert">글자 적용</div>
+    <div class="main_cont">
+        <div class="input_zone">
+            <input class="txt_string" type="text" id="id_input" value="테스트용문자열">
+            <div class="btn_convert default_btn">글자 적용</div>
+        </div>
+        <div class="mode_zone">
+            <div class="txt_mode">현재 모드 : png 모드</div>
+            <div class="mode_btn_zone">
+                <div class="btn_mode default_btn" code="1">png 모드</div>
+                <div class="btn_mode default_btn btn_mode2" code="0">gif 모드</div>
+            </div>
+        </div>
+        <div class="main_gif_zone" style="display: none;">
+            <div class="main_txt"></div>
+            <div class="main_txt_temp" style="display:none;"></div>
+            <div class="color_zone">
+                <input type='color' name='color0' id="id_color_0" code="0" value="#00000" />
+                <label for="id_color_0">홀수 글자 색상</label>
+                <input type='color' name='color1' id="id_color_1" code="1" value="#00000" />
+                <label for="id_color_1">짝수 글자 색상</label>
+                <input type='color' name='color1' id="id_color_2" code="2" value="#000000" />
+                <label for="id_color_1">테두리 색상</label>
+            </div>
+        </div>
+        <div class="main_png_zone">
+            <div class="main_png_txt"></div>
+            <div class="color_zone">
+                <input type='color' name='color0' id="id_color_3" code="3" value="#00000" />
+                <label for="id_color_0">그라데이션 색상 1</label>
+                <input type='color' name='color1' id="id_color_4" code="4" value="#00000" />
+                <label for="id_color_1">그라데이션 색상 2</label>
+                <input type='color' name='color1' id="id_color_5" code="5" value="#000000" />
+                <label for="id_color_1">테두리 색상</label>
+            </div>
+        </div>
+        <div class="btns_zone">
+            <!--            <div class="font_btn">Cafe24Dongdong</div>-->
+            <!--            <div class="font_btn">CookieRegular</div>-->
+            <div class="font_btn">CookieBold</div>
+            <!--            <div class="font_btn">CookieBlack</div>-->
+            <!--            <div class="font_btn">esamanruMedium</div>-->
+            <div class="font_btn">esamanruBold</div>
+            <div class="font_btn">Katuri</div>
+            <div class="font_btn">KCC</div>
+            <!--            <div class="font_btn">KorailMedium</div>-->
+            <div class="font_btn">KorailBold</div>
+            <!--            <div class="font_btn">netmarbleM</div>-->
+            <div class="font_btn">netmarbleB</div>
+            <div class="font_btn">ONE_Mobile</div>
+            <!--            <div class="font_btn">SDSamlipOutline</div>-->
+            <div class="font_btn">SDSamlipBasic</div>
+            <!--            <div class="font_btn">SF_Lemon</div>-->
+            <div class="font_btn">Sokcho</div>
+            <!--            <div class="font_btn">Tinkerbell</div>-->
+            <div class="font_btn">TTTogether</div>
+            <div class="font_btn">DNF</div>
+            <div class="font_btn">Gumi</div>
+            <div class="font_btn">Byeolbich</div>
+            <div class="font_btn">Dunggeunmiso</div>
+            <!--            <div class="font_btn">Bombanghak</div>-->
+            <div class="font_btn">Jalnan</div>
+            <div class="font_btn">Maple</div>
+            <div class="font_btn">Aggro</div>
+            <div class="font_btn">YClover</div>
+            <div class="font_btn">YOnepick</div>
+        </div>
+        <div class="download_zone">
+            <div class="btn_download default_btn">변환</div>
+        </div>
+        <div class="finish_zone">
+            <div class="txt_finish_title"></div>
+            <div class="txt_finish_desc"></div>
+        </div>
     </div>
-    <div class="main_zone">
-        <div class="main_txt">테스트용문자열</div>
-        <div class="main_txt_temp" style="display:none;"></div>
-    </div>
-    <div class="btns_zone">
-        <div class="font_btn">Cafe24Dongdong</div>
-        <div class="font_btn">CookieRegular</div>
-        <div class="font_btn">CookieBold</div>
-        <div class="font_btn">CookieBlack</div>
-        <div class="font_btn">esamanruMedium</div>
-        <div class="font_btn">esamanruBold</div>
-        <div class="font_btn">Katuri</div>
-        <div class="font_btn">KCC</div>
-        <div class="font_btn">KorailMedium</div>
-        <div class="font_btn">KorailBold</div>
-        <div class="font_btn">netmarbleM</div>
-        <div class="font_btn">netmarbleB</div>
-        <div class="font_btn">ONE_Mobile</div>
-        <div class="font_btn">SDSamlipOutline</div>
-        <div class="font_btn">SDSamlipBasic</div>
-        <div class="font_btn">SF_Lemon</div>
-        <div class="font_btn">Sokcho</div>
-        <div class="font_btn">Tinkerbell</div>
-        <div class="font_btn">TTTogether</div>
-    </div>
-    <div class="download_zone">
-        <div class="btn_download">변환</div>
-    </div>
-    <div class="finish_zone">
-        <div class="txt_finish_title">작업 대기중</div>
-        <div class="txt_finish_desc">작업 대기중</div>
-    </div>
-    
-<!--    <div id="preview" style="border: 1px solid black; width: 200px; height: 200px; overflow: hidden;"></div>-->
-</body></html>
+
+    <!--    <div id="preview" style="border: 1px solid black; width: 200px; height: 200px; overflow: hidden;"></div>-->
+</body>
+
+</html>
 <script language="javascript">
     window.addEventListener('DOMContentLoaded', function() {
-        setTimeout(setInit, 100);
+        setTimeout(setInit, 10);
     });
+
 </script>
