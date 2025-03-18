@@ -157,6 +157,120 @@ function onClickFontBtn(obj) {
     $(".main_png_txt").css("font-family", $(obj).html());
     $(".main_png_txt").css("font-weight", "900");
 }
+
+
+function saveTextAsImage() {
+    const textElement = $(".main_png_txt")[0];
+    const text = textElement.innerText || textElement.textContent;  
+    const fontSize = parseInt(window.getComputedStyle(textElement).fontSize);
+    const fontFamily = window.getComputedStyle(textElement).fontFamily;
+    const gradientColor1 = $("#id_color_3").val(); 
+    const gradientColor2 = $("#id_color_4").val();
+    const strokeColor = $("#id_color_5").val();
+    const strokeWidth = parseInt($("#stroke_width").val()) || 5;
+
+    // 📌 Canvas 생성
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    // 📌 Canvas 크기 설정
+    canvas.width = textElement.offsetWidth;
+    canvas.height = textElement.offsetHeight;
+
+    // 📌 배경 투명 설정
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // 📌 폰트 설정
+    ctx.font = `${fontSize}px ${fontFamily}`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    // 📌 그라데이션 설정
+    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    gradient.addColorStop(0, gradientColor1);
+    gradient.addColorStop(1, gradientColor2);
+
+    // 📌 테두리(stroke) 먼저 그리기
+    //ctx.strokeStyle = strokeColor;
+    //ctx.lineWidth = strokeWidth;
+    //ctx.strokeText(text, canvas.width / 2, canvas.height / 2);
+    
+    for (let i = 0; i < strokeWidth*3; i++) {
+        ctx.lineWidth = i;
+        ctx.strokeStyle = strokeColor;
+        ctx.strokeText(text, canvas.width / 2, canvas.height / 2);
+    }
+    
+    // 📌 채우기(fill) 적용
+    ctx.fillStyle = gradient;
+    ctx.fillText(text, canvas.width / 2, canvas.height / 2);
+
+    // 📌 이미지 저장
+    const link = document.createElement("a");
+    link.href = canvas.toDataURL("image/png");
+    link.download = "text_image.png";
+    link.click();
+}
+
+
+function saveTextAsImageOld() {
+    const textElement = $(".main_png_txt")[0];  
+    const text = textElement.innerText || textElement.textContent;  
+    const fontSize = parseInt(window.getComputedStyle(textElement).fontSize);
+    const fontFamily = window.getComputedStyle(textElement).fontFamily;
+    const gradientColor1 = $("#id_color_3").val(); 
+    const gradientColor2 = $("#id_color_4").val();
+    const strokeColor = $("#id_color_5").val();
+    const strokeWidth = parseInt($("#stroke_width").val()) || 5;
+
+    // 📌 SVG 코드 생성
+    const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="800" height="300">
+            <style>
+
+                @font-face {
+                    font-family: 'CookieBold';
+                    font-weight: 800;
+                    src: url(fonts/CookieRun_Bold.ttf) format('truetype');
+                }
+                text {
+                    font-family: 'CookieBold';
+                }
+            </style>
+            <defs>
+                <linearGradient id="textGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:${gradientColor1};" />
+                    <stop offset="100%" style="stop-color:${gradientColor2};" />
+                </linearGradient>
+            </defs>
+            <text x="50%" y="50%" font-size="${fontSize}px" font-family="${fontFamily}"
+                text-anchor="middle" dominant-baseline="middle"
+                stroke="${strokeColor}" stroke-width="${strokeWidth}" fill="url(#textGradient)">
+                ${text}
+            </text>
+        </svg>`;
+
+    // 📌 SVG를 데이터 URL로 변환
+    const svgData = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+    const img = new Image();
+    img.src = svgData;
+
+    img.onload = function () {
+        // 📌 Canvas 생성 및 SVG 렌더링
+        const canvas = document.createElement("canvas");
+        canvas.width = 800;
+        canvas.height = 300;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+
+        // 📌 이미지 저장
+        const link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = "text_image.png";
+        link.click();
+    };
+}
+
 function saveGradientTextCanvas() {
     const text = $(".main_png_txt").text();  
     const fontSize = parseInt(window.getComputedStyle($(".main_png_txt")[0]).fontSize);
@@ -189,11 +303,7 @@ function saveGradientTextCanvas() {
         ctx.strokeText(text, canvas.width / 2, canvas.height / 2);
     }
     
-    ctx.strokeStyle = strokeColor;
     ctx.fillStyle = gradient;
-
-    // 텍스트를 그리기
-    ctx.strokeText(text, canvas.width / 2, canvas.height / 2);
     ctx.fillText(text, canvas.width / 2, canvas.height / 2);
 
     // 이미지 다운로드
@@ -207,8 +317,8 @@ function saveGradientTextCanvas() {
 
 function setStartAnimation() {
     if (m_mode == "1") {
-        saveGradientTextCanvas();
-
+        //saveGradientTextCanvas();
+        saveTextAsImageOld();
         return;
     }
     $(".txt_finish_title").html("");
