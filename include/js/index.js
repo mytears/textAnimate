@@ -216,8 +216,8 @@ function saveTextAsImage() {
 function saveTextAsImageOld() {
     const textElement = $(".main_png_txt")[0];  
     const text = textElement.innerText || textElement.textContent;
-    const textWidth = textElement.outerWidth();
-    const textHeight = textElement.outerHeight();
+    const textWidth = $(".main_png_txt").outerWidth();
+    const textHeight = $(".main_png_txt").outerHeight();
     const fontSize = parseInt(window.getComputedStyle(textElement).fontSize);
     const fontFamily = window.getComputedStyle(textElement).fontFamily;
     const gradientColor1 = $("#id_color_3").val(); 
@@ -244,6 +244,11 @@ function saveTextAsImageOld() {
     // 📌 SVG를 데이터 URL로 변환
     const svgData = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
     const img = new Image();
+    img.src = svgData;
+    $(".main_svg_zone").append(img);
+    
+    return;
+    //const img = new Image();
     img.src = svgData;
 
     img.onload = function () {
