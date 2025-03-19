@@ -4,6 +4,7 @@
     src: url(fonts/Cafe24Dongdong.ttf) format('truetype');
 }
 
+/*
 @font-face {
     font-family: 'CookieRegular';
     font-weight: 700;
@@ -21,6 +22,7 @@
     font-weight: 900;
     src: url(fonts/CookieRun_Black.ttf) format('truetype');
 }
+*/
 
 @font-face {
     font-family: 'esamanruMedium';
@@ -180,7 +182,7 @@
 
 
 * {
-/*    font-size: 150px;*/
+    /*    font-size: 150px;*/
     /*    font-weight: 900;*/
     margin: 0;
     padding: 0;
@@ -205,12 +207,12 @@ img {
     pointer-events: none;
 }
 
-.default_btn:active{
+.default_btn:active {
     background-color: #999999;
     color: #FFFFFF;
 }
 
-.input_zone{
+.input_zone {
     width: 1280px;
     height: 200px;
     display: flex;
@@ -219,7 +221,7 @@ img {
     flex-direction: column;
 }
 
-.mode_zone{
+.mode_zone {
     width: 1280px;
     height: 150px;
     display: flex;
@@ -228,18 +230,18 @@ img {
     flex-direction: column;
 }
 
-.txt_mode{
+.txt_mode {
     font-size: 32px;
 }
 
-.mode_btn_zone{
+.mode_btn_zone {
     display: flex;
     align-items: center;
-    justify-content: space-around;   
-    width: 100%; 
+    justify-content: space-around;
+    width: 100%;
 }
 
-.btn_mode{
+.btn_mode {
     font-size: 32px;
     width: 48%;
     height: 90px;
@@ -252,13 +254,14 @@ img {
     margin: 10px 0px;
     background-color: #9CD5D1;
 }
-.btn_mode2{
+
+.btn_mode2 {
     background-color: #83C1EA;
 }
 
-.input_zone input{
-    width:100%;
-    height:60%;
+.input_zone input {
+    width: 100%;
+    height: 60%;
     font-size: 50px;
     text-align: center;
 }
@@ -307,24 +310,24 @@ img {
     /*    display: inline-block;*/
     color: #00000000;
     font-size: 150px;
-/*    border: 1px solid #FF0000;*/
+    /*    border: 1px solid #FF0000;*/
 }
 
 .main_png_txt {
     display: flex;
     align-items: center;
     justify-content: center;
-/*    background: transparent !important;*/
+    /*    background: transparent !important;*/
     width: auto;
     height: 400px;
     font-family: 'CookieBold';
     /*    display: inline-block;*/
     color: #00000000;
     font-size: 150px;
-/*    border: 1px solid #FF0000;*/
+    /*    border: 1px solid #FF0000;*/
     background: linear-gradient(0deg, #FFFFFF, #FFFFFF);
-    -webkit-background-clip: text; 
-    -webkit-text-fill-color: transparent; 
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .main_txt span {
@@ -354,11 +357,11 @@ img {
 }
 
 .main_txt span:nth-child(odd) {
-/*    color: #3288BD;*/
+    /*    color: #3288BD;*/
 }
 
 .main_txt span:nth-child(even) {
-/*    color: #FC8D59*/
+    /*    color: #FC8D59*/
 }
 
 .btns_zone {
@@ -367,7 +370,7 @@ img {
     display: grid;
     place-items: center;
     gap: 2px;
-    grid-template-columns:repeat(4, minmax(1px, 1fr));
+    grid-template-columns: repeat(4, minmax(1px, 1fr));
 }
 
 .font_btn {
@@ -399,7 +402,7 @@ img {
     font-size: 30px;
 }
 
-.finish_zone div{
+.finish_zone div {
     height: 60px;
     display: flex;
     align-items: center;
@@ -419,36 +422,46 @@ img {
     background: #DCB8A6;
 }
 
-.color_zone{
-    height:80px;
+.color_zone {
+    height: 80px;
     display: flex;
-    align-items: center; /* 글자 수직 중앙 정렬 */
-    justify-content: center; /* 필요 시 수평 정렬 */
+    align-items: center;
+    /* 글자 수직 중앙 정렬 */
+    justify-content: center;
+    /* 필요 시 수평 정렬 */
 }
-input[type='color']{
+
+input[type='color'] {
     height: 70%;
 }
 
-.color_zone label{
+.color_zone label {
     width: 220px;
     height: 100%;
     display: flex;
-    align-items: center; /* 글자 수직 중앙 정렬 */
-    justify-content: center; /* 필요 시 수평 정렬 */
+    align-items: center;
+    /* 글자 수직 중앙 정렬 */
+    justify-content: center;
+    /* 필요 시 수평 정렬 */
     font-size: 25px;
     font-family: 'Noto';
 }
 
 
-@media (orientation: landscape) { /* 가로형 (landscape) */
+@media (orientation: landscape) {
+
+    /* 가로형 (landscape) */
     .main_cont {
-        height: 100vh; /* 기존 설정 유지 */
+        height: 100vh;
+        /* 기존 설정 유지 */
     }
 }
 
-@media (orientation: portrait) { /* 세로형 (portrait) */
+@media (orientation: portrait) {
+
+    /* 세로형 (portrait) */
     .main_cont {
-        height: 100vw; /* 최소 높이 보장 */
+        height: 100vw;
+        /* 최소 높이 보장 */
     }
 }
-

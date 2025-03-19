@@ -71,6 +71,19 @@ function setInit() {
     $("#id_color_3").val(m_f_color_1[0]);
     $("#id_color_4").val(m_f_color_1[1]);
     $("#id_color_5").val(m_f_color_1[2]);
+
+
+
+    const fontBase64 = `
+        @font-face {
+            font-family: 'CookieBlack';
+            src: url('${cookieBlack}') format('woff');
+        }`;
+
+    const style = document.createElement("style");
+    style.innerHTML = fontBase64;
+    document.head.appendChild(style);
+    $(".main_png_txt").css("font-family", "CookieBlack");
 }
 
 function onClickStroke(_obj) {
@@ -80,7 +93,7 @@ function onClickStroke(_obj) {
         $(".main_txt span").each(function () {
             this.style.webkitTextStroke = `${strokeWidth}px ${strokeColor}`;
         });
-    }else {
+    } else {
         t_color = $("#id_color_5").val();
         $(".main_png_txt").each(function () {
             this.style.webkitTextStroke = `${strokeWidth}px ${t_color}`;
@@ -123,7 +136,7 @@ function updateTextColorsCSS_0(_color0, _color1) {
 }
 
 function updateTextColorsCSS_1(_color0, _color1) {
-    
+
     $(".main_png_txt").css({
         "background": "linear-gradient(0deg, " + _color1 + ", " + _color0 + ")",
         "-webkit-background-clip": "text",
@@ -161,10 +174,10 @@ function onClickFontBtn(obj) {
 
 function saveTextAsImage() {
     const textElement = $(".main_png_txt")[0];
-    const text = textElement.innerText || textElement.textContent;  
+    const text = textElement.innerText || textElement.textContent;
     const fontSize = parseInt(window.getComputedStyle(textElement).fontSize);
     const fontFamily = window.getComputedStyle(textElement).fontFamily;
-    const gradientColor1 = $("#id_color_3").val(); 
+    const gradientColor1 = $("#id_color_3").val();
     const gradientColor2 = $("#id_color_4").val();
     const strokeColor = $("#id_color_5").val();
     const strokeWidth = parseInt($("#stroke_width").val()) || 5;
@@ -194,13 +207,13 @@ function saveTextAsImage() {
     //ctx.strokeStyle = strokeColor;
     //ctx.lineWidth = strokeWidth;
     //ctx.strokeText(text, canvas.width / 2, canvas.height / 2);
-    
-    for (let i = 0; i < strokeWidth*3; i++) {
+
+    for (let i = 0; i < strokeWidth * 3; i++) {
         ctx.lineWidth = i;
         ctx.strokeStyle = strokeColor;
         ctx.strokeText(text, canvas.width / 2, canvas.height / 2);
     }
-    
+
     // 📌 채우기(fill) 적용
     ctx.fillStyle = gradient;
     ctx.fillText(text, canvas.width / 2, canvas.height / 2);
@@ -214,17 +227,17 @@ function saveTextAsImage() {
 
 
 function saveTextAsImageOld() {
-    const textElement = $(".main_png_txt")[0];  
+    const textElement = $(".main_png_txt")[0];
     const text = textElement.innerText || textElement.textContent;
     const textWidth = $(".main_png_txt").outerWidth();
     const textHeight = $(".main_png_txt").outerHeight();
     const fontSize = parseInt(window.getComputedStyle(textElement).fontSize);
     const fontFamily = window.getComputedStyle(textElement).fontFamily;
-    const gradientColor1 = $("#id_color_3").val(); 
+    const gradientColor1 = $("#id_color_3").val();
     const gradientColor2 = $("#id_color_4").val();
     const strokeColor = $("#id_color_5").val();
     const strokeWidth = parseInt($("#stroke_width").val()) || 5;
-
+    console.log(fontFamily);
     // 📌 SVG 코드 생성
     const svg = `
         <svg xmlns="http://www.w3.org/2000/svg" width="${textWidth}" height="${textHeight}">
@@ -234,19 +247,27 @@ function saveTextAsImageOld() {
                     <stop offset="100%" style="stop-color:${gradientColor2};" />
                 </linearGradient>
             </defs>
+            <style>
+                @font-face {
+                    font-family: 'CookieBold2';
+                    src: url('${cookieBold}') format('woff');
+                }
+                text {
+                    font-family: 'CookieBold2', sans-serif;
+                }
+            </style>
             <text x="50%" y="50%" font-size="${fontSize}px" font-family="${fontFamily}"
                 text-anchor="middle" dominant-baseline="middle"
                 stroke="${strokeColor}" stroke-width="${strokeWidth}" fill="url(#textGradient)">
                 ${text}
             </text>
         </svg>`;
-
     // 📌 SVG를 데이터 URL로 변환
     const svgData = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
     const img = new Image();
     img.src = svgData;
     $(".main_svg_zone").append(img);
-    
+
     return;
     //const img = new Image();
     img.src = svgData;
@@ -268,12 +289,12 @@ function saveTextAsImageOld() {
 }
 
 function saveGradientTextCanvas() {
-    const text = $(".main_png_txt").text();  
+    const text = $(".main_png_txt").text();
     const fontSize = parseInt(window.getComputedStyle($(".main_png_txt")[0]).fontSize);
     const fontFamily = window.getComputedStyle($(".main_png_txt")[0]).fontFamily;
-    const textColor1 = $("#id_color_3").val(); 
-    const textColor2 = $("#id_color_4").val(); 
-    const strokeColor = $("#id_color_5").val();     
+    const textColor1 = $("#id_color_3").val();
+    const textColor2 = $("#id_color_4").val();
+    const strokeColor = $("#id_color_5").val();
     let width = $(".main_png_txt").outerWidth();
     let height = $(".main_png_txt").outerHeight();
 
@@ -292,13 +313,13 @@ function saveGradientTextCanvas() {
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     //ctx.lineWidth = strokeWidth;
-    
-    for (let i = 0; i < strokeWidth*3; i++) {
+
+    for (let i = 0; i < strokeWidth * 3; i++) {
         ctx.lineWidth = i;
         ctx.strokeStyle = strokeColor;
         ctx.strokeText(text, canvas.width / 2, canvas.height / 2);
     }
-    
+
     ctx.fillStyle = gradient;
     ctx.fillText(text, canvas.width / 2, canvas.height / 2);
 
