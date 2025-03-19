@@ -215,7 +215,9 @@ function saveTextAsImage() {
 
 function saveTextAsImageOld() {
     const textElement = $(".main_png_txt")[0];  
-    const text = textElement.innerText || textElement.textContent;  
+    const text = textElement.innerText || textElement.textContent;
+    const textWidth = textElement.outerWidth();
+    const textHeight = textElement.outerHeight();
     const fontSize = parseInt(window.getComputedStyle(textElement).fontSize);
     const fontFamily = window.getComputedStyle(textElement).fontFamily;
     const gradientColor1 = $("#id_color_3").val(); 
@@ -225,18 +227,7 @@ function saveTextAsImageOld() {
 
     // 📌 SVG 코드 생성
     const svg = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="800" height="300">
-            <style>
-
-                @font-face {
-                    font-family: 'CookieBold';
-                    font-weight: 800;
-                    src: url(fonts/CookieRun_Bold.ttf) format('truetype');
-                }
-                text {
-                    font-family: 'CookieBold';
-                }
-            </style>
+        <svg xmlns="http://www.w3.org/2000/svg" width="${textWidth}" height="${textHeight}">
             <defs>
                 <linearGradient id="textGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                     <stop offset="0%" style="stop-color:${gradientColor1};" />
