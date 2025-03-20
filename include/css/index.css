@@ -4,25 +4,11 @@
     src: url(fonts/Cafe24Dongdong.ttf) format('truetype');
 }
 
-/*
-@font-face {
-    font-family: 'CookieRegular';
-    font-weight: 700;
-    src: url(fonts/CookieRun_Regular.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'CookieBold';
-    font-weight: 800;
-    src: url(fonts/CookieRun_Bold.ttf) format('truetype');
-}
-
 @font-face {
     font-family: 'CookieBlack';
     font-weight: 900;
     src: url(fonts/CookieRun_Black.ttf) format('truetype');
 }
-*/
 
 @font-face {
     font-family: 'esamanruMedium';

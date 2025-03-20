@@ -236,8 +236,8 @@ function saveTextAsImageOld() {
     const gradientColor1 = $("#id_color_3").val();
     const gradientColor2 = $("#id_color_4").val();
     const strokeColor = $("#id_color_5").val();
-    const strokeWidth = parseInt($("#stroke_width").val()) || 5;
-    console.log(fontFamily);
+    const strokeWidth = 7;
+    //console.log(fontFamily);
     // 📌 SVG 코드 생성
     const svg = `
         <svg xmlns="http://www.w3.org/2000/svg" width="${textWidth}" height="${textHeight}">
@@ -249,11 +249,11 @@ function saveTextAsImageOld() {
             </defs>
             <style>
                 @font-face {
-                    font-family: 'CookieBold2';
-                    src: url('${cookieBold}') format('woff');
+                    font-family: 'CookieBlack';
+                    src: url('${CookieBlack}') format('woff');
                 }
                 text {
-                    font-family: 'CookieBold2', sans-serif;
+                    font-family: 'CookieBlack', sans-serif;
                 }
             </style>
             <text x="50%" y="50%" font-size="${fontSize}px" font-family="${fontFamily}"
