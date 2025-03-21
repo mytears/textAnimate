@@ -9,7 +9,9 @@ let m_f_color_1 = ["#F7AC43", "#FFFFFF", "#000000"];
 const strokeWidth = 7;
 let m_mode = "1";
 let m_f_txt = "테스트용문자열";
-
+let m_font_list = [];
+let m_curr_font = null;
+let m_curr_font_num = 0;
 
 function setInit() {
 
@@ -43,9 +45,9 @@ function setInit() {
     });
     $(".main_txt").html(m_f_txt);
 
-    $(".main_png_txt").html($("#id_input").val());
-    $(".main_txt").html($("#id_input").val());
-    $(".main_txt_temp").html($(".main_txt").text());
+    $(".main_png_txt").html($("#id_input").val());// + "<img src='images/heart_002.png'>");
+    $(".main_txt").html($("#id_input").val());// + "<img src='images/heart_002.png'>");
+    $(".main_txt_temp").html($(".main_txt").html());
     const $mainTxt = $(".main_txt");
     const text = $mainTxt.text();
     $mainTxt.empty(); // 기존 텍스트 제거
@@ -74,6 +76,8 @@ function setInit() {
 
 
 
+    /*
+
     const fontBase64 = `
         @font-face {
             font-family: 'CookieBlack';
@@ -84,6 +88,38 @@ function setInit() {
     style.innerHTML = fontBase64;
     document.head.appendChild(style);
     $(".main_png_txt").css("font-family", "CookieBlack");
+    */
+    setLoadFont();
+}
+
+function setLoadFont() {
+    let _url = "data/font_list.json";
+    $.ajax({
+        url: _url,
+        dataType: 'json',
+        success: function (data) {
+            m_font_list = data.fonts_list;
+            setInitFont();
+        },
+        error: function (xhr, status, error) {
+            console.error('컨텐츠 에러 발생:', status, error);
+        },
+    });
+}
+
+function setInitFont() {
+
+    for (let i = 0; i < m_font_list.length; i += 1) {
+        setAddFont(m_font_list[i]);
+    }
+
+    let t_html = "";
+    $(".btns_zone").html("");
+    for (i = 0; i < m_font_list.length; i += 1) {
+        t_html += "<div class='font_btn' code='" + i + "' onClick='javascript:onClickBtnFont(" + i + ");' style='font-family:" + m_font_list[i].name + "' >" + m_font_list[i].title + "</div>";
+    }
+    $(".btns_zone").append(t_html);
+    onClickBtnFont(0);
 }
 
 function onClickStroke(_obj) {
@@ -136,7 +172,6 @@ function updateTextColorsCSS_0(_color0, _color1) {
 }
 
 function updateTextColorsCSS_1(_color0, _color1) {
-
     $(".main_png_txt").css({
         "background": "linear-gradient(0deg, " + _color1 + ", " + _color0 + ")",
         "-webkit-background-clip": "text",
@@ -145,22 +180,64 @@ function updateTextColorsCSS_1(_color0, _color1) {
 }
 
 function onClickConvertBtn(_obj) {
-    $(".main_txt_temp").html($(".txt_string").val());
-    $(".main_txt").html($(".main_txt_temp").html());
-    const $mainTxt = $(".main_txt");
-    const text = $mainTxt.text();
-    $mainTxt.empty(); // 기존 텍스트 제거
-    spans = [];
-    $.each(text.split(""), function (index, char) {
-        const $span = $("<span>").text(char).css({
-            opacity: 1
+    if (m_mode == "0") {
+        $(".main_txt_temp").html($(".txt_string").val());
+        $(".main_txt").html($(".main_txt_temp").html());
+        const $mainTxt = $(".main_txt");
+        const text = $mainTxt.text();
+        $mainTxt.empty(); // 기존 텍스트 제거
+        spans = [];
+        $.each(text.split(""), function (index, char) {
+            const $span = $("<span>").text(char).css({
+                opacity: 1
+            });
+            $mainTxt.append($span);
+            spans.push($span);
         });
-        $mainTxt.append($span);
-        spans.push($span);
-    });
+    } else {
+        $(".main_png_txt").html($(".txt_string").val());// + "<img src='images/heart_002.png'>");
+    }
 }
 
+function onClickBtnFont(_num) {
+    $(".font_btn").removeClass("active");
+    $(".font_btn[code='" + _num + "']").addClass("active");
+    m_curr_font = m_font_list[_num];
+    m_curr_font_num = _num;
+    $(".main_txt").css("font-family", m_curr_font.name);
+    $(".main_png_txt").css("font-family", m_curr_font.name);
+}
 
+function setAddFont(_obj) {
+
+    fetch(_obj.path)
+        .then(response => response.json())
+        .then(data => {
+            const fontData = data.data; // Base64 WOFF 데이터
+
+            // 폰트 이름 설정 (임의로 지정 가능)
+            const fontName = _obj.name;
+
+            // Base64 데이터를 Blob으로 변환
+            //const fontBlob = new Blob([Uint8Array.from(atob(fontData.split(",")[1]), c => c.charCodeAt(0))], { type: "font/woff" });
+            //const fontURL = URL.createObjectURL(fontBlob);
+
+            // 스타일 태그 생성 및 @font-face 추가
+            const style = document.createElement("style");
+            style.innerHTML = `
+                @font-face {
+                    font-family: '${fontName}';
+                    src: url('${fontData}') format('woff');
+                }
+            `;
+            document.head.appendChild(style);
+            //$(".main_txt").css("font-family", fontName);
+            //$(".main_png_txt").css("font-family", fontName);
+            _obj.data = fontData;
+            _obj.loaded = true;
+        })
+        .catch(error => console.error("폰트 로드 실패:", error));
+}
 
 function onClickFontBtn(obj) {
     $(".main_txt").css("font-family", $(obj).html());
@@ -237,8 +314,32 @@ function saveTextAsImageOld() {
     const gradientColor2 = $("#id_color_4").val();
     const strokeColor = $("#id_color_5").val();
     const strokeWidth = 7;
+    const filterStyle = window.getComputedStyle(textElement).filter;
+
+    let shadowColor = "rgba(0,0,0,0)";
+    let shadowX = 0;
+    let shadowY = 0;
+    let shadowBlur = 0;
+
+
+    // drop-shadow 값을 올바르게 추출하는 정규식
+    const dropShadowMatch = filterStyle.match(/drop-shadow\(\s*(rgba?\([^)]+\)|#[0-9a-fA-F]+)\s+(-?\d+px)\s+(-?\d+px)\s+(-?\d+px)?\s*\)/);
+    //console.log(dropShadowMatch);
+    if (dropShadowMatch) {
+        shadowColor = dropShadowMatch[1]; // 색상 (rgba 또는 hex)
+        shadowX = parseFloat(dropShadowMatch[2]) || 0; // x-offset
+        shadowY = parseFloat(dropShadowMatch[3]) || 0; // y-offset
+        shadowBlur = parseFloat(dropShadowMatch[4]) || 0; // blur 값
+
+        //console.log({shadowColor,shadowX,shadowY,shadowBlur});
+
+        // 이제 이 값을 사용하여 SVG의 <filter>를 생성
+    }
     //console.log(fontFamily);
     // 📌 SVG 코드 생성
+    //console.log(m_curr_font.name);
+    //console.log(m_curr_font.path);
+
     const svg = `
         <svg xmlns="http://www.w3.org/2000/svg" width="${textWidth}" height="${textHeight}">
             <defs>
@@ -246,37 +347,48 @@ function saveTextAsImageOld() {
                     <stop offset="0%" style="stop-color:${gradientColor1};" />
                     <stop offset="100%" style="stop-color:${gradientColor2};" />
                 </linearGradient>
+                <filter id="dropShadow">
+                    <feOffset dx="${shadowX}" dy="${shadowY}" result="offsetBlur" />
+                    <feGaussianBlur in="offsetBlur" stdDeviation="${shadowBlur}" result="blurred" />
+                    <feFlood flood-color="${shadowColor}" result="shadowColor" />
+                    <feComposite in2="blurred" in="shadowColor" operator="in" result="shadow" />
+                    <feMerge>
+                        <feMergeNode in="shadow" />
+                        <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                </filter>
             </defs>
             <style>
                 @font-face {
-                    font-family: 'CookieBlack';
-                    src: url('${CookieBlack}') format('woff');
+                    font-family: '${m_curr_font.name}';
+                    src: url('${m_curr_font.data}') format('woff');
                 }
                 text {
-                    font-family: 'CookieBlack', sans-serif;
+                    font-family: '${m_curr_font.name}', sans-serif;
+                    filter: url(#dropShadow);
                 }
             </style>
-            <text x="50%" y="50%" font-size="${fontSize}px" font-family="${fontFamily}"
+            <text x="50%" y="50%" font-size="${fontSize}px" 
                 text-anchor="middle" dominant-baseline="middle"
                 stroke="${strokeColor}" stroke-width="${strokeWidth}" fill="url(#textGradient)">
                 ${text}
             </text>
         </svg>`;
+    //console.log(svg);
     // 📌 SVG를 데이터 URL로 변환
     const svgData = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
     const img = new Image();
     img.src = svgData;
     $(".main_svg_zone").append(img);
 
-    return;
     //const img = new Image();
     img.src = svgData;
 
     img.onload = function () {
         // 📌 Canvas 생성 및 SVG 렌더링
         const canvas = document.createElement("canvas");
-        canvas.width = 800;
-        canvas.height = 300;
+        canvas.width = textWidth;
+        canvas.height = textHeight;
         const ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0);
 
