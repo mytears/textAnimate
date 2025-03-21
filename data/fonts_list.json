@@ -1,84 +1,103 @@
 {
 	"fonts_list":[
 		{
+			"title":"별빛하늘",
 			"name":"ByeolbichhaneulB",
 			"path":"/data/fonts/ByeolbichhaneulB.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"쿠키런",
+			"name":"CookieRunBlack",
+			"path":"/data/fonts/CookieRunBlack.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"둥근미소",
+			"name":"DunggeunmisoB",
+			"path":"/data/fonts/DunggeunmisoB.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"가석",
+			"name":"GasoekOneRegular",
+			"path":"/data/fonts/GasoekOneRegular.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"이사만루",
+			"name":"GongGothicBold",
+			"path":"/data/fonts/GongGothicBold.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"낭만있구미",
+			"name":"GumiRomance",
+			"path":"/data/fonts/GumiRomance.json"
+		},
+			"title":"집토끼라운드",
+			"name":"HSJiptokkiRound",
+			"path":"/data/fonts/HSJiptokkiRound.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"잘난",
+			"name":"JalnanOTF00",
+			"path":"/data/fonts/JalnanOTF00.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"까투리",
+			"name":"Katuri",
+			"path":"/data/fonts/Katuri.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"무럭무럭",
+			"name":"KCCMurukmuruk",
+			"path":"/data/fonts/KCCMurukmuruk.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"메이플스토리",
+			"name":"MaplestoryOTFBold",
+			"path":"/data/fonts/MaplestoryOTFBold.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"문경감홍사과",
+			"name":"MungyeongGamhongApple",
+			"path":"/data/fonts/MungyeongGamhongApple.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"원모바일",
+			"name":"ONEMobilePOP",
+			"path":"/data/fonts/ONEMobilePOP.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"이누아리두리네",
+			"name":"RixInooAriDuriRegular",
+			"path":"/data/fonts/RixInooAriDuriRegular.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"어그로",
+			"name":"SBAggroB",
+			"path":"/data/fonts/SBAggroB.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"삼립호빵",
+			"name":"SDSamliphopangcheBasic",
+			"path":"/data/fonts/SDSamliphopangcheBasic.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"속초바다",
+			"name":"SokchoBadaDotum",
+			"path":"/data/fonts/SokchoBadaDotum.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"TT투게더",
+			"name":"TTTogetherA",
+			"path":"/data/fonts/TTTogetherA.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"클로버",
+			"name":"YCloverTTFBold",
+			"path":"/data/fonts/YCloverTTFBold.json"
 		},
 		{
-			"name":"",
-			"path":"/data/fonts/.json"
-		},
-		{
-			"name":"",
-			"path":"/data/fonts/.json"
+			"title":"최애",
+			"name":"YOnepickBold",
+			"path":"/data/fonts/YOnepickBold.json"
 		}
 	]
 }
