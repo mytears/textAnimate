@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="include/css/animate.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="include/css/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <script src="include/js/lib/jquery.min.js"></script>
     <script src="include/js/lib/jquery.ripples.min.js"></script>
     <script src="include/js/lib/gsap.min.js"></script>
@@ -30,8 +30,11 @@
     <div class="main_cont">
         <div class="input_zone">
             <input class="txt_string" type="text" id="id_input" value="테스트용문자열">
+            <div class="btn_add default_btn">하트 추가</div>
             <div class="btn_convert default_btn">글자 적용</div>
         </div>
+        <!--
+        
         <div class="mode_zone">
             <div class="txt_mode">현재 모드 : png 모드</div>
             <div class="mode_btn_zone">
@@ -39,6 +42,8 @@
                 <div class="btn_mode default_btn btn_mode2" code="0">gif 모드</div>
             </div>
         </div>
+        
+-->
         <div class="main_svg_zone" style="display: none;">
         </div>
         <!--
@@ -80,18 +85,25 @@
             </div>
         </div>
         <div class="main_png_zone">
-            <div class="main_png_txt"></div>
+            <div class="main_png_txt">
+                <div class="main_png_txt_font main_png_txt_value" title="테스트용문자열"></div>
+                <div class="main_png_txt_font main_png_txt_bg1" title="테스트용문자열">테스트용문자열</div>
+                <div class="main_png_txt_font main_png_txt_bg2" title="테스트용문자열">테스트용문자열</div>
+
+            </div>
             <div class="color_zone">
                 <input type='color' name='color0' id="id_color_3" code="3" value="#000000" />
                 <label for="id_color_0">그라데이션 색상 1</label>
                 <input type='color' name='color1' id="id_color_4" code="4" value="#000000" />
                 <label for="id_color_1">그라데이션 색상 2</label>
+                <!--
                 <input type='color' name='color1' id="id_color_5" code="5" value="#000000" />
                 <label for="id_color_1">테두리 색상</label>
+-->
             </div>
         </div>
         <div class="btns_zone">
-<!--
+            <!--
             
             <div class="font_btn">CookieBlack</div>
             <div class="font_btn">esamanruBold</div>

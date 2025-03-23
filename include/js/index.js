@@ -29,9 +29,14 @@ function setInit() {
         onClickConvertBtn(this);
     });
 
+    $(".btn_add").on("touchstart mousedown", function (e) {
+        e.preventDefault();
+        onClickAddBtn(this);
+    });
+
     $(".txt_string").on("focus", function (e) {
         e.preventDefault();
-        $(".txt_string").val("");
+        //        $(".txt_string").val("");
     });
 
     $("#id_color_0, #id_color_1, #id_color_3, #id_color_4").on("input", function (e) {
@@ -45,8 +50,8 @@ function setInit() {
     });
     $(".main_txt").html(m_f_txt);
 
-    $(".main_png_txt").html($("#id_input").val());// + "<img src='images/heart_002.png'>");
-    $(".main_txt").html($("#id_input").val());// + "<img src='images/heart_002.png'>");
+    $(".main_png_txt_value").html($("#id_input").val()); // + "<img src='images/heart_002.png'>");
+    $(".main_txt").html($("#id_input").val()); // + "<img src='images/heart_002.png'>");
     $(".main_txt_temp").html($(".main_txt").html());
     const $mainTxt = $(".main_txt");
     const text = $mainTxt.text();
@@ -63,10 +68,14 @@ function setInit() {
     $(".main_txt span").each(function () {
         this.style.webkitTextStroke = `${strokeWidth}px ${m_f_color_0[2]}`;
     });
-    updateTextColorsCSS_1(m_f_color_1[0], m_f_color_1[1]);
+    //updateTextColorsCSS_1(m_f_color_1[0], m_f_color_1[1]);
     $(".main_png_txt").each(function () {
-        this.style.webkitTextStroke = `${strokeWidth}px ${m_f_color_1[2]}`;
+        //this.style.webkitTextStroke = `${strokeWidth}px ${m_f_color_1[2]}`;
     });
+
+    $(".main_png_txt").css("--stroke-color", convDarkenColor(m_f_color_1[0], 25)); // 더 진한 색으로 변경
+
+
     $("#id_color_0").val(m_f_color_0[0]);
     $("#id_color_1").val(m_f_color_0[1]);
     $("#id_color_2").val(m_f_color_0[2]);
@@ -148,6 +157,8 @@ function onClickColorPicker(_obj) {
         t_color_0 = $("#id_color_3").val();
         t_color_1 = $("#id_color_4").val();
         updateTextColorsCSS_1(t_color_0, t_color_1);
+        //$(".main_png_txt").css("color", t_color_0);
+        //$(".main_png_txt").css("--stroke-color", convDarkenColor(t_color_0, 35)); // 더 진한 색으로 변경
     }
 }
 
@@ -172,11 +183,23 @@ function updateTextColorsCSS_0(_color0, _color1) {
 }
 
 function updateTextColorsCSS_1(_color0, _color1) {
+
+    $(".main_png_txt_value").css({
+        "background": "linear-gradient(0deg, " + _color1 + ", " + _color0 + ", " + _color0 + ")",
+        "-webkit-background-clip": "text",
+        "-webkit-text-fill-color": "transparent"
+    });
+
+    //$(".main_png_txt").css("color", t_color_0);
+    $(".main_png_txt_bg2").css("--stroke-color", convDarkenColor(_color0, 20)); // 더 진한 색으로 변경
+
+    /*
     $(".main_png_txt").css({
         "background": "linear-gradient(0deg, " + _color1 + ", " + _color0 + ")",
         "-webkit-background-clip": "text",
         "-webkit-text-fill-color": "transparent"
     });
+    */
 }
 
 function onClickConvertBtn(_obj) {
@@ -195,7 +218,8 @@ function onClickConvertBtn(_obj) {
             spans.push($span);
         });
     } else {
-        $(".main_png_txt").html($(".txt_string").val());// + "<img src='images/heart_002.png'>");
+        $(".main_png_txt_font").attr("title", $(".txt_string").val());
+        $(".main_png_txt_font").html($(".txt_string").val()); // + "<img src='images/heart_002.png'>");
     }
 }
 
@@ -205,7 +229,7 @@ function onClickBtnFont(_num) {
     m_curr_font = m_font_list[_num];
     m_curr_font_num = _num;
     $(".main_txt").css("font-family", m_curr_font.name);
-    $(".main_png_txt").css("font-family", m_curr_font.name);
+    $(".main_png_txt_font").css("font-family", m_curr_font.name);
 }
 
 function setAddFont(_obj) {
@@ -250,6 +274,38 @@ function onClickFontBtn(obj) {
 
 
 function saveTextAsImage() {
+    let element = document.querySelector(".main_png_txt");
+
+    domtoimage.toPng(element)
+        .then(function (dataUrl) {
+            let link = document.createElement("a");
+            link.href = dataUrl;
+            link.download = "text_image.png";
+            link.click();
+        })
+        .catch(function (error) {
+            console.error("이미지 저장 중 오류 발생:", error);
+        });
+
+
+
+    /*
+    let element = document.querySelector(".main_png_txt");
+
+    html2canvas(element, {
+        backgroundColor: null, // 투명 배경 유지
+        useCORS: true // 외부 폰트 문제 해결
+    }).then(canvas => {
+        let link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png"); // PNG 데이터 URL 생성
+        link.download = "text_image.png"; // 저장될 파일 이름
+        link.click();
+    });
+    */
+}
+
+
+function saveTextAsImageOld2() {
     const textElement = $(".main_png_txt")[0];
     const text = textElement.innerText || textElement.textContent;
     const fontSize = parseInt(window.getComputedStyle(textElement).fontSize);
@@ -447,7 +503,7 @@ function saveGradientTextCanvas() {
 function setStartAnimation() {
     if (m_mode == "1") {
         //saveGradientTextCanvas();
-        saveTextAsImageOld();
+        saveTextAsImage();
         return;
     }
     $(".txt_finish_title").html("");
@@ -727,4 +783,30 @@ async function captureFrames3(_sec) {
 // 💾 GIF 다운로드 (버튼 클릭 시 실행)
 function onClickDownloadBtn() {
     setStartAnimation();
+}
+
+function convDarkenColor(hex, percent) {
+    // HEX → RGB 변환
+    let r = parseInt(hex.substring(1, 3), 16);
+    let g = parseInt(hex.substring(3, 5), 16);
+    let b = parseInt(hex.substring(5, 7), 16);
+
+    // 밝기 조절 (비율 적용)
+    r = Math.max(0, r - (r * percent / 100));
+    g = Math.max(0, g - (g * percent / 100));
+    b = Math.max(0, b - (b * percent / 100));
+
+    // RGB → HEX 변환
+    return `#${Math.round(r).toString(16).padStart(2, '0')}${Math.round(g).toString(16).padStart(2, '0')}${Math.round(b).toString(16).padStart(2, '0')}`;
+}
+
+function onClickAddBtn(_obj) {
+    let input = $("#id_input")[0]; // JavaScript의 input 요소 가져오기
+    let cursorPos = input.selectionStart; // 현재 커서 위치
+    let text = input.value; // 현재 입력된 값
+    let newText = text.slice(0, cursorPos) + "♥" + text.slice(cursorPos); // 문자열 삽입
+
+    input.value = newText; // 새로운 값 적용
+    input.setSelectionRange(cursorPos + 1, cursorPos + 1); // 커서 위치 조정
+    input.focus(); // 다시 포커스 주기    
 }
