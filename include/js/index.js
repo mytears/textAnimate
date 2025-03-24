@@ -868,17 +868,20 @@ function onClickAddBtn(_obj) {
     let text = input.innerHTML; // 현재 입력된 값
     //console.log(text);
     // UTF-16 기준의 커서 위치를 코드포인트 기준으로 변환
+    let caretPos = getCaretPosition($("#id_input"));
+    console.log(caretPos);
     let utf16CursorPos = input.selectionStart;
-    let cursorPos = [...text.substring(0, utf16CursorPos)].length; // 코드포인트 기준으로 변환
+    //let cursorPos = [...text.substring(0, utf16CursorPos)].length; // 코드포인트 기준으로 변환
     //let cursorPos = Array.from(text.substring(0, utf16CursorPos)).length; // 정확한 문자 단위 변환
+    let cursorPos = caretPos;
 
     // 새로운 문자열 생성 (이모지를 포함한 문자열 처리)
     let insertText = $(_obj).html();
     //console.log(insertText);
-    let newText = [...text].slice(0, cursorPos).join("") + insertText + [...text].slice(cursorPos).join("");
+    //let newText = [...text].slice(0, cursorPos).join("") + insertText + [...text].slice(cursorPos).join("");
     //let newText = Array.from(text).slice(0, cursorPos).join("") + insertText + Array.from(text).slice(cursorPos).join("");
 
-
+    let newText = text + insertText;
     // 값 적용 후 커서 위치 업데이트
     $("#id_input").html(newText);
     //console.log(newText);
@@ -901,6 +904,19 @@ function onClickAddBtn(_obj) {
     input.setSelectionRange(cursorPos + 1, cursorPos + 1); // 커서 위치 조정
     input.focus(); // 다시 포커스 주기    
     */
+}
+
+function getCaretPosition($editableDiv) {
+    let selection = window.getSelection();
+    if (!selection.rangeCount) return 0;  // 선택된 범위가 없으면 0 반환
+
+    let range = selection.getRangeAt(0);
+    let preCaretRange = range.cloneRange();
+
+    preCaretRange.selectNodeContents($editableDiv[0]);
+    preCaretRange.setEnd(range.endContainer, range.endOffset);
+
+    return preCaretRange.toString().length;
 }
 
 function getAccurateLength(text) {
