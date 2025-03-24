@@ -79,7 +79,9 @@ function setInit() {
         //this.style.webkitTextStroke = `${strokeWidth}px ${m_f_color_1[2]}`;
     });
 
-    $(".main_png_txt").css("--stroke-color", convDarkenColor(m_f_color_1[0], 25)); // 더 진한 색으로 변경
+
+    $(".main_png_txt_bg2").css("--stroke-color", convDarkenColor(m_f_color_1[0], 25)); // 더 진한 색으로 변경
+    $(".main_png_txt_bg2").css("--shadow-color", convDarkenColor(m_f_color_1[0], 25)); // 더 진한 색으로 변경
 
 
     $("#id_color_0").val(m_f_color_0[0]);
@@ -148,9 +150,13 @@ function onClickStroke(_obj) {
         });
     } else {
         t_color = $("#id_color_5").val();
+        /*
         $(".main_png_txt").each(function () {
             this.style.webkitTextStroke = `${strokeWidth}px ${t_color}`;
         });
+        */
+        $(".main_png_txt_bg2").css("--stroke-color", t_color);
+        $(".main_png_txt_bg2").css("--shadow-color", t_color);
     }
 }
 
@@ -200,6 +206,7 @@ function updateTextColorsCSS_1(_color0, _color1) {
 
     //$(".main_png_txt").css("color", t_color_0);
     $(".main_png_txt_bg2").css("--stroke-color", convDarkenColor(_color0, 20)); // 더 진한 색으로 변경
+    $(".main_png_txt_bg2").css("--shadow-color", convDarkenColor(_color0, 20)); // 더 진한 색으로 변경
 
     /*
     $(".main_png_txt").css({
@@ -300,6 +307,23 @@ function onClickFontBtn(obj) {
 
 function saveTextAsImage() {
 
+    /*
+    $(".main_png_txt_temp").css("width", "auto");
+    $(".main_png_txt_temp").css("height", "auto");
+    let t_w = $(".main_png_txt_temp").width() * 1.5;
+    let t_h = $(".main_png_txt_temp").outerHeight() * 1.2;
+    $(".main_png_txt_temp").css({
+        width: t_w + "px",
+        height: t_h + "px"
+    });
+    */
+    domtoimage.toBlob($(".main_png_txt_temp").get(0))
+        .then(function (blob) {
+            saveAs(blob, 'text_timage.png');
+
+            //$(".main_png_txt_temp").css({ width: "auto", height: "auto" });
+        });
+    /*
     $(".main_png_txt").css("width", "auto");
     $(".main_png_txt").css("height", "auto");
     let t_w = $(".main_png_txt").width() * 1.1;
@@ -314,7 +338,7 @@ function saveTextAsImage() {
 
             $(".main_png_txt").css({ width: "auto", height: "auto" });
         });
-
+        */
     /*
     let element = document.querySelector(".main_png_txt");
     domtoimage.toPng(element)
