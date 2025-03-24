@@ -90,7 +90,7 @@ function setInit() {
     $("#id_color_5").val(m_f_color_1[2]);
 
     $(".txt_string").html(m_f_txt);
-//    $(".main_png_txt_font").attr("title", $(".txt_string").val());
+    //    $(".main_png_txt_font").attr("title", $(".txt_string").val());
     $(".main_png_txt_font").html($(".txt_string").html()); // + "<img src='images/heart_002.png'>");
 
     /*
@@ -299,27 +299,20 @@ function onClickFontBtn(obj) {
 
 
 function saveTextAsImage() {
-    
+
     $(".main_png_txt").css("width", "auto");
     $(".main_png_txt").css("height", "auto");
     let t_w = $(".main_png_txt").width() * 1.1;
-    let t_h = $(".main_png_txt").height() * 1.1;
-    
-    //console.log($(".main_png_txt").width());
-    //console.log(t_w);
-    $(".main_png_txt").css("width", t_w + "px");
-    $(".main_png_txt").css("height", t_h + "px");
-    /*
-    htmlToImage.toPng($('.main_png_txt').get(0))
-        .then(function (dataUrl) {
-            saveAs(dataUrl, 'image_img.png');
-        })
-    */
+    let t_h = $(".main_png_txt").outerHeight() * 1.2;
+    $(".main_png_txt").css({
+        width: t_w + "px",
+        height: t_h + "px"
+    });
     domtoimage.toBlob($(".main_png_txt").get(0))
         .then(function (blob) {
             saveAs(blob, 'text_timage.png');
-            $(".main_png_txt").css("width", "auto");
-            $(".main_png_txt").css("height", "auto");
+
+            $(".main_png_txt").css({ width: "auto", height: "auto" });
         });
 
     /*
