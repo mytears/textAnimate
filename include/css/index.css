@@ -190,6 +190,8 @@
     width: 100vw;
     height: 100vh;
     background-color: #FFFFFF;
+    position: absolute;
+    z-index: -1;
 }
 
 .main_cont{
@@ -360,6 +362,7 @@ img {
 
 .main_png_txt {
     font-size: 6rem;
+/*    font-size: clamp(2rem, 10vw, 6rem);*/
     display: flex;
     align-items: center;
     justify-content: center;
@@ -375,7 +378,7 @@ img {
 }
 
 .main_png_txt_temp {
-    font-size: 150px;
+    font-size: 120px;
     display: flex;
     align-items: center;
 /*    justify-content: center;*/
@@ -588,8 +591,8 @@ input[type='color'] {
 }
 
 .color_zone label {
-    margin-left: 10px;
-    width: 25%;
+    margin: 0px 10px;
+    width: auto;
     height: 100%;
     display: flex;
     align-items: center;
@@ -598,4 +601,11 @@ input[type='color'] {
     /* 필요 시 수평 정렬 */
     font-size: clamp(5px, 5vw, 17px);
     font-family: 'Noto';
+}
+
+.stroke_reset{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
 }
