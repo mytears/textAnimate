@@ -188,7 +188,17 @@
 
 .main_cont{
     width: 50vw;
+    min-width: 700px;
     height: 100vh;
+}
+
+@media (max-aspect-ratio: 1/1) {
+    .main_cont {
+        width: 100vw;
+        min-width: unset; 
+        min-width: unset; 
+        height: 100vh;
+    }
 }
 
 img {
