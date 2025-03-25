@@ -393,7 +393,7 @@ img {
 /*    color: #F7AC43;*/
     position: absolute;
     white-space: nowrap;
-    padding: 15px 25px;
+    padding: 15px 25px 25px 25px;
     padding-right: 4%;
     z-index: -10;
 }
