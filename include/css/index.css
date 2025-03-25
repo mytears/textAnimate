@@ -427,12 +427,12 @@ img {
 
 .main_png_txt_bg2 {
     position: absolute;
-    -webkit-text-stroke: 0.25em var(--stroke-color, #F7AC43);
+    -webkit-text-stroke: 0.325em var(--stroke-color, #F7AC43);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     z-index: 0;   
 /*    filter: drop-shadow(12px 12px 0px var(--shadow-color)); */
-    filter: drop-shadow(0.2em 0.2em 0 var(--shadow-color));
+    filter: drop-shadow(0.125em 0.125em 0 var(--shadow-color));
     display: flex;
     align-items: center;
 /*    margin-right: 5%;*/
