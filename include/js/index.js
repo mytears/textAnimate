@@ -359,7 +359,9 @@ function saveTextAsImage() {
     });
     */
     let t_name = convFilterText($(".txt_string").val());
-    
+    if(t_name==""){
+        t_name = "image";
+    }
     //return;
     domtoimage.toBlob($(".main_png_txt_temp").get(0))
         .then(function (blob) {
