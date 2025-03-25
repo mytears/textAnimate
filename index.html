@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="include/css/animate.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="include/css/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script src="include/js/lib/grapheme-splitter.min.js"></script>
     <script src="include/js/lib/jquery.min.js"></script>
     <script src="include/js/lib/jquery.ripples.min.js"></script>
     <script src="include/js/lib/gsap.min.js"></script>
@@ -39,8 +39,8 @@
     <div class="main_cont">
         <div class="input_zone">
             <!--            <textarea class="txt_string" type="text" id="id_input" value=""></textarea>-->
-            <div class="txt_string" id="id_txt_string" contenteditable="true"></div>
-            <!--            <input class="txt_string" type="text" id="id_input" value="">-->
+            <!--            <div class="txt_string" id="id_txt_string" contenteditable="true"></div>-->
+            <input class="txt_string" type="text" id="id_input" value="">
             <div class="emoji_btn_zone">
                 <div class="btn_add">♡</div>
                 <div class="btn_add">♥</div>
@@ -54,6 +54,15 @@
                 <div class="btn_add">™</div>
                 <div class="btn_add">ʚ</div>
                 <div class="btn_add">ɞ</div>
+                <div class="btn_add">🩷</div>
+                <div class="btn_add">🧡</div>
+                <div class="btn_add">❤️</div>
+                <div class="btn_add">💕</div>
+                <div class="btn_add">💘</div>
+                <div class="btn_add">⭐</div>
+                <div class="btn_add">✨</div>
+                <div class="btn_add">⚡</div>
+                <!--
                 <div class="btn_add"><data>🩷</data></div>
                 <div class="btn_add"><data>🧡</data></div>
                 <div class="btn_add"><data>❤️</data></div>
@@ -62,6 +71,7 @@
                 <div class="btn_add"><data>⭐</data></div>
                 <div class="btn_add"><data>✨</data></div>
                 <div class="btn_add"><data>⚡</data></div>
+                -->
             </div>
             <div class="btn_convert default_btn">글자 적용</div>
         </div>
@@ -130,8 +140,8 @@
                 <input type='color' name='color5' id="id_color_5" code="5" value="#000000" />
                 <label for="id_color_5">테두리</label>
                 <div class="stroke_reset" onclick="javascript:onClickStrokeReset()">
-                    <input type='color' name='color6' id="id_color_6" code="6" value="#000000" style="pointer-events: none;"/>
-                    <label for="">테두리 초기화</label>
+                    <input type='color' name='color6' id="id_color_6" code="6" value="#000000" style="pointer-events: none;" />
+                    <label>테두리 초기화</label>
                 </div>
             </div>
         </div>

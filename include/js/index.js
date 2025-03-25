@@ -13,6 +13,7 @@ let m_font_list = [];
 let m_curr_font = null;
 let m_curr_font_num = 0;
 let m_default_font_size = 0;
+let splitter = new GraphemeSplitter();
 
 function setInit() {
 
@@ -40,23 +41,9 @@ function setInit() {
         //        $(".txt_string").val("");
     });
 
-    $(".txt_string").on("input", function (e) {
-        e.preventDefault();
-        /*
-        if (getAccurateLength($("#id_txt_string").text()) > 8) {
-            trimTo9Characters($("#id_txt_string"));
-            Swal.fire({
-                icon: 'error',
-                title: '9글자까지만 입력가능합니다.',
-                target: ".main_cont",
-                position: "center",
-                customClass: {
-                    popup: 'alert',
-                },
-            });
-            return;
-        }
-        */
+    $(".txt_string").on("input paste", function (e) {
+        //e.preventDefault();
+        setCheckTextLength(this, 10);
     });
 
     $("#id_color_0, #id_color_1, #id_color_3, #id_color_4").on("input", function (e) {
@@ -111,19 +98,20 @@ function setInit() {
     $("#id_color_4").val(m_f_color_1[1]);
     $("#id_color_5").val(m_f_color_1[2]);
 
-    $(".txt_string").html(m_f_txt);
-
+    //    $(".txt_string").html(m_f_txt);
+    $(".txt_string").val(m_f_txt);
+    /*
     let range = document.createRange();
     let selection = window.getSelection();
     range.selectNodeContents($(".txt_string")[0]);
     range.collapse(false); // `false`로 설정하면 맨 끝으로 이동
     selection.removeAllRanges();
     selection.addRange(range);
-
+    */
     m_default_font_size = parseFloat($(".main_png_txt").css("font-size"));
 
-    //    $(".main_png_txt_font").attr("title", $(".txt_string").val());
-    $(".main_png_txt_font").html($(".txt_string").html()); // + "<img src='images/heart_002.png'>");
+    $(".main_png_txt_font").html(getWrapEmojiWithTag($(".txt_string").val()));
+    //$(".main_png_txt_font").html($(".txt_string").html()); // + "<img src='images/heart_002.png'>");
 
     /*
 
@@ -139,6 +127,17 @@ function setInit() {
     $(".main_png_txt").css("font-family", "CookieBlack");
     */
     setLoadFont();
+}
+
+function isEmoji(character) {
+    const exclude_symbols = ["™", "©", "®", "ℹ", "♻", "☎", "☣", "☢", "☠"];
+    return character.match(/\p{Extended_Pictographic}/u) && !exclude_symbols.includes(character);
+}
+
+function getWrapEmojiWithTag(text) {
+    return text.replace(/([\p{Extended_Pictographic}]\uFE0F?)/gu, match =>
+        isEmoji(match) ? `<data>${match}</data>` : match
+    );
 }
 
 function onClickStrokeReset() {
@@ -287,7 +286,8 @@ function onClickConvertBtn(_obj) {
         $(".main_png_txt").css("height", "auto");
         //$(".main_png_txt_font").attr("title", $(".txt_string").val());
         //console.log($(".txt_string").html());
-        $(".main_png_txt_font").html($(".txt_string").html()); // + "<img src='images/heart_002.png'>");
+        $(".main_png_txt_font").html(getWrapEmojiWithTag($(".txt_string").val()));
+        //$(".main_png_txt_font").html($(".txt_string").html()); // + "<img src='images/heart_002.png'>");
         adjustFontSize();
     }
 }
@@ -358,7 +358,7 @@ function saveTextAsImage() {
     */
     domtoimage.toBlob($(".main_png_txt_temp").get(0))
         .then(function (blob) {
-            saveAs(blob, 'text_timage.png');
+            saveAs(blob, 'text_image.png');
 
             //$(".main_png_txt_temp").css({ width: "auto", height: "auto" });
         });
@@ -920,11 +920,49 @@ function convDarkenColor(hex, percent) {
     return `#${Math.round(r).toString(16).padStart(2, '0')}${Math.round(g).toString(16).padStart(2, '0')}${Math.round(b).toString(16).padStart(2, '0')}`;
 }
 
+function setCheckTextLength(_obj, _max) {
+    let t_input = $(_obj);
+    let t_val = t_input.val();
+    let t_cursor_pos = t_input[0].selectionStart;
+
+    // 입력 값을 grapheme으로 나누어 정확한 글자 수 계산
+    let graphemes = splitter.splitGraphemes(t_val);
+
+    if (graphemes.length > _max) {
+
+        if (getAccurateLength(t_val) > 9) {
+            Swal.fire({
+                icon: 'error',
+                title: '10글자까지만 입력가능합니다.',
+                target: ".main_cont",
+                position: "center",
+                customClass: {
+                    popup: 'alert',
+                },
+            });
+        }
+        // 현재 커서 위치 바로 앞의 글자 삭제
+        let new_val = [...graphemes];
+        new_val.splice(t_cursor_pos - 1, 1); // 커서 앞 문자 제거
+
+        t_input.val(new_val.join(""));
+
+        // 커서 위치 유지 (삭제된 문자만큼 왼쪽으로 이동)
+        let new_cursor_pos = t_cursor_pos - 1;
+        t_input[0].setSelectionRange(new_cursor_pos, new_cursor_pos);
+        t_input.focus();
+    }
+}
+
 function onClickAddBtn(_obj) {
-    if (getAccurateLength($("#id_txt_string").text()) > 8) {
+    let t_cursorPos = $("#id_input")[0].selectionStart;
+    let t_input = $("#id_input");
+    let t_val = t_input.val();
+
+    if (getAccurateLength(t_val) > 9) {
         Swal.fire({
             icon: 'error',
-            title: '9글자까지만 입력가능합니다.',
+            title: '10글자까지만 입력가능합니다.',
             target: ".main_cont",
             position: "center",
             customClass: {
@@ -933,6 +971,16 @@ function onClickAddBtn(_obj) {
         });
         return;
     }
+
+    let t_str = t_val.substr(0, t_cursorPos) + $(_obj).text() + t_val.substr(t_cursorPos, t_val.length - t_cursorPos);
+    t_input.val(t_str);
+    let t_newCursorPos = t_cursorPos + $(_obj).text().length;
+    t_input[0].selectionStart = t_newCursorPos;
+    t_input[0].selectionEnd = t_newCursorPos;
+    t_input.focus();
+
+    //console.log(t_str);
+    return;
     /*
     let input = $("#id_txt_string")[0]; // JavaScript의 input 요소 가져오기
     let cursorPos = input.selectionStart; // 현재 커서 위치
@@ -953,7 +1001,7 @@ function onClickAddBtn(_obj) {
     let insertText = $(_obj).html();
 
     let fragment;
-    
+
     // insertText가 HTML 태그를 포함하면 그대로 사용, 그렇지 않으면 텍스트 노드로 변환
     if (/<[^>]+>/g.test(insertText)) { // HTML 태그가 포함된 경우
         let tempElement = document.createElement("div");
