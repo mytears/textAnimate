@@ -342,7 +342,9 @@ function onClickFontBtn(obj) {
     $(".main_png_txt").css("font-family", $(obj).html());
     $(".main_png_txt").css("font-weight", "900");
 }
-
+function convFilterText(text) {
+    return text.replace(/[^가-힣a-zA-Z0-9]/g, '');
+}
 
 function saveTextAsImage() {
 
@@ -356,9 +358,12 @@ function saveTextAsImage() {
         height: t_h + "px"
     });
     */
+    let t_name = convFilterText($(".txt_string").val());
+    
+    //return;
     domtoimage.toBlob($(".main_png_txt_temp").get(0))
         .then(function (blob) {
-            saveAs(blob, 'text_image.png');
+            saveAs(blob, 'name_tag_'+t_name+'.png');
 
             //$(".main_png_txt_temp").css({ width: "auto", height: "auto" });
         });
