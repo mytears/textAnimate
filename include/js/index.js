@@ -254,7 +254,7 @@ function updateTextColorsCSS_1(_color0, _color1) {
 }
 
 function onClickConvertBtn(_obj) {
-
+    /*
     if (getAccurateLength($("#id_txt_string").val()) > 9) {
         Swal.fire({
             icon: 'error',
@@ -266,6 +266,7 @@ function onClickConvertBtn(_obj) {
             },
         });
     }
+    */
     if (m_mode == "0") {
         $(".main_txt_temp").html($(".txt_string").val());
         $(".main_txt").html($(".main_txt_temp").html());
@@ -936,7 +937,7 @@ function setCheckTextLength(_obj, _max) {
     let graphemes = splitter.splitGraphemes(t_val);
 
     if (graphemes.length > _max) {
-
+        /*
         if (getAccurateLength(t_val) > 9) {
             Swal.fire({
                 icon: 'error',
@@ -948,6 +949,7 @@ function setCheckTextLength(_obj, _max) {
                 },
             });
         }
+        */
         // 현재 커서 위치 바로 앞의 글자 삭제
         let new_val = [...graphemes];
         new_val.splice(t_cursor_pos - 1, 1); // 커서 앞 문자 제거
@@ -965,7 +967,7 @@ function onClickAddBtn(_obj) {
     let t_cursorPos = $("#id_input")[0].selectionStart;
     let t_input = $("#id_input");
     let t_val = t_input.val();
-
+    /*
     if (getAccurateLength(t_val) > 9) {
         Swal.fire({
             icon: 'error',
@@ -978,7 +980,7 @@ function onClickAddBtn(_obj) {
         });
         return;
     }
-
+    */
     let t_str = t_val.substr(0, t_cursorPos) + $(_obj).text() + t_val.substr(t_cursorPos, t_val.length - t_cursorPos);
     t_input.val(t_str);
     let t_newCursorPos = t_cursorPos + $(_obj).text().length;
