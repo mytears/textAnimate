@@ -43,7 +43,7 @@ function setInit() {
 
     $(".txt_string").on("input paste", function (e) {
         //e.preventDefault();
-        setCheckTextLength(this, 10);
+        //setCheckTextLength(this, 10);
     });
 
     $("#id_color_0, #id_color_1, #id_color_3, #id_color_4").on("input", function (e) {
