@@ -136,7 +136,7 @@ function isEmoji(character) {
 
 function getWrapEmojiWithTag(text) {
     return text.replace(/([\p{Extended_Pictographic}]\uFE0F?)/gu, match =>
-        isEmoji(match) ? `<data>${match}</data>` : match
+        isEmoji(match) ? `<span>${match}</span>` : match
     );
 }
 
