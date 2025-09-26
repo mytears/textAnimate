@@ -136,7 +136,7 @@ function isEmoji(character) {
 
 function getWrapEmojiWithTag(text) {
     return text.replace(/([\p{Extended_Pictographic}]\uFE0F?)/gu, match =>
-        isEmoji(match) ? `<span>${match}</span>` : match
+        isEmoji(match) ? `<span class="emoji">${match}</span>` : match
     );
 }
 
@@ -193,7 +193,28 @@ function onClickStroke(_obj) {
         */
         $(".main_png_txt_bg2").css("--stroke-color", t_color);
         $(".main_png_txt_bg2").css("--shadow-color", t_color);
+        //$(".main_png_txt_bg1 .emoji").css("filter", hexToCssFilter("#FFFFFF"));
+        //$(".main_png_txt_bg2 .emoji").css("filter", hexToCssFilter(t_color));
     }
+}
+
+function hexToCssFilter(hexColor) {
+    // r, g, b 값으로 분리
+    let r = parseInt(hexColor.substr(1, 2), 16);
+    let g = parseInt(hexColor.substr(3, 2), 16);
+    let b = parseInt(hexColor.substr(5, 2), 16);
+
+    // 기본값: brightness(0) saturate(100%) 로 단색화
+    // 그 다음 색을 맞추기 위해 invert/sepia/hue-rotate/saturate 조정
+    // ※ 정확한 값 계산은 복잡하므로 보통은 미세 보정이 필요합니다
+    return `
+        brightness(0) saturate(100%)
+        invert(${(255 - r) / 2.55}%)
+        sepia(${g / 2.55}%)
+        saturate(${(b + 100)})
+        hue-rotate(${(r - g + b) % 360}deg)
+        brightness(95%) contrast(90%)
+    `;
 }
 
 function onClickColorPicker(_obj) {
